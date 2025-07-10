@@ -22,7 +22,11 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     }
 
     try {
-        const response = await fetch("http://localhost:3000/login", {
+        const BASE_URL = window.location.hostname === "localhost"
+            ? "http://localhost:3000"
+            : "https://auth-klxi.onrender.com";
+
+            const response = await fetch(`${BASE_URL}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

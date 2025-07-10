@@ -20,6 +20,9 @@ app.use(cookies())
 app.get('/',(req,res)=>{
     res.render('index.html', { title: 'Home' });
 });
+app.get('/api/user', isLogin, (req, res) => {
+  return res.json({ username: req.user.username });
+});
 app.post('/create',async(req,res)=>{
             try{
             let {username,email,password}=req.body;

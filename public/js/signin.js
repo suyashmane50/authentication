@@ -29,14 +29,17 @@ document.getElementById('signupForm').addEventListener('submit', async function 
 
     // Send data to backend (mocked for now)
     try {
-        const response = await fetch("http://localhost:3000/create", {
+        const BASE_URL = window.location.hostname === "localhost"
+            ? "http://localhost:3000"
+            : "https://auth-klxi.onrender.com";
+
+            const response = await fetch(`${BASE_URL}/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ username, email, password })
-        });
-
+            });
         const data = await response.json();
 
         if (response.ok) {

@@ -2,12 +2,12 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   try {
     const response = await fetch('/logout', {
       method: 'GET',
-      credentials: 'include' // send cookies
+      credentials: 'include'
     });
 
     if (response.ok) {
       alert("You have been logged out!");
-      window.location.href = "/login"; // redirect to login
+      window.location.href = "/login";
     } else {
       alert("Logout failed.");
     }
