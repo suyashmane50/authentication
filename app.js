@@ -30,10 +30,10 @@ app.post('/create',async(req,res)=>{
             const hashedPassword= await bcrypt.hash(password,10);
             let createdUser=await userSchema.create({
                 username,
-                email,
+                email,  
                 password:hashedPassword,
             });
-            let token=jwt.sign({email:email,userid:createdUser._id,username:createdUser.username},(process.env.JWT_SECRET,{ expiresIn: '1h' }))
+            let token=jwt.sign({email:email,userid:createdUser._id,username:createdUser.username},process.env.JWT_SECRET,{ expiresIn: '1h' })
             res.cookie("token",token);
             console.log("created user",createdUser);
             return res.status(200).json({message:"user created successfully"})
@@ -59,7 +59,7 @@ app.post('/login', async (req, res) => {
         if (!isPassCorrect) {
             return res.status(401).json({ message: "Incorrect password." });
         }
-        let token=jwt.sign({email:email,userid:user._id,username:user.username},(process.env.JWT_SECRET,{ expiresIn: '1h' } ))
+        let token=jwt.sign({email:email,userid:user._id,username:user.username},process.env.JWT_SECRET,{ expiresIn: '1h' } )
         res.cookie("token",token);
         console.log("User login successful");
         return res.status(200).json({ message: "User login successful" });
@@ -86,7 +86,7 @@ function isLogin(req,res,next){
     const {token}=req.cookies
     if(!token)return res.json({message:"you must be login"})
     try{
-        let data=jwt.verify(token,(process.env.JWT_SECRET,{ expiresIn: '1h' }));
+        let data=jwt.verify(token,process.env.JWT_SECRET,{ expiresIn: '1h' });
         req.user=data; 
         next();  
     }catch(err){
